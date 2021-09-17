@@ -74,10 +74,19 @@ if biggestContour.size != 0 and gradePoints.size != 0:
         #print(myIndexVal[0])
         myIndex.append(myIndexVal[0][0])
     print(myIndex)
+    for elements in myIndex:
+        if elements ==0:
+            print('\tA',end='')
+        if elements == 1:
+            print('\tB',end='')
+        if elements == 2:
+            print('\tC',end='')
+        if elements == 3:
+            print('\tD',end='')
+        if elements == 4:
+            print('\tE',end='')
 
-
-
-
+            
 imgBlank = np.zeros_like(img)
 imgArray = ([img,imgGray,imgBlur,imgCanny],[imgContours,imgBiggestContour,imgWarpColored,imgBlank ])
 imgStack = utlis.stackImages(imgArray,0.5)
