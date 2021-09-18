@@ -26,7 +26,7 @@ cv2.drawContours(imgContours, contours, -1, (0, 255, 0), 10)
 rectCon =utlis.rectContour(contours)
 biggestContour = utlis.getCornerPoints(rectCon[0])
 #print(biggestContour.shape)
-gradePoints = utlis.getCornerPoints(rectCon[1])
+gradePoints = utlis.getCornerPoints(rectCon[0])
 #print(biggestContour)
 
 if biggestContour.size != 0 and gradePoints.size != 0:
