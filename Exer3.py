@@ -25,30 +25,16 @@ cv2.drawContours(imgContours, contours, -1, (0, 255, 0), 10)
 #
 rectCon =utlis.rectContour(contours)
 biggestContour = utlis.getCornerPoints(rectCon[0])
-#print(biggestContour.shape)
-gradePoints = utlis.getCornerPoints(rectCon[0])
-#print(biggestContour)
 
 if biggestContour.size != 0 and gradePoints.size != 0:
     cv2.drawContours(imgBiggestContour, biggestContour, -1, (0, 255, 0), 20) 
-    cv2.drawContours(imgBiggestContour, gradePoints, -1, (255, 0, 0), 20) 
-
     biggestContour= utlis.reorder(biggestContour)
-    gradePoints = utlis.reorder(gradePoints)
-
     pts1 = np.float32(biggestContour) 
     pts2 = np.float32([[0, 0],[width, 0], [0, height],[width, height]]) 
     matrix = cv2.getPerspectiveTransform(pts1, pts2) 
     imgWarpColored = cv2.warpPerspective(img, matrix, (width, height)) 
 
-
-    ptG1 = np.float32(gradePoints) 
-    ptG2 = np.float32([[0, 0],[325, 0], [0, 150],[325, 150]]) 
-    matrixG = cv2.getPerspectiveTransform(ptG1, ptG2) 
-    imgGradeDisplay = cv2.warpPerspective(img, matrix, (width, height)) 
-    #cv2.imshow("Grade", imgGradeDisplay)
-
-
+    
     imgWarpGray = cv2.cvtColor(imgWarpColored,cv2.COLOR_BGR2GRAY)
     imgThresh = cv2.threshold(imgWarpGray, 170, 255,cv2.THRESH_BINARY_INV )[1] 
     boxes = utlis.splitBoxes(imgThresh)
@@ -90,8 +76,6 @@ if biggestContour.size != 0 and gradePoints.size != 0:
 imgBlank = np.zeros_like(img)
 imgArray = ([img,imgGray,imgBlur,imgCanny],[imgContours,imgBiggestContour,imgWarpColored,imgBlank ])
 imgStack = utlis.stackImages(imgArray,0.5)
-
-
 
 cv2.imshow("Stacked image", imgStack )
 cv2.waitKey(0)
